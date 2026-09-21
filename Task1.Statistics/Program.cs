@@ -1,52 +1,30 @@
 using System;
-using System.Globalization;
-
-namespace Task1.Statistics
+class Program
 {
-    class Program 
+    static void Main()
     {
-        static void Main(string[] args)
-        {
-            Random random = new Random(100);
-            int[] numbers = new int[10];
+        Random rnd = new Random();
+        int[] arr = new int[10];
+        for (int i = 0; i < arr.Length; i++)
+            arr[i] = rnd.Next(1, 101);   
 
-            for (int i = 0; i < numbers.Length; i++)
-            {
-                numbers[i] = random.Next(1, 101);
-            }
-            Console.WriteLine($"Массив: {string.Join(", ", numbers)}");
+        Console.WriteLine("Массив: " + string.Join(", ", arr));
 
-            int sum = 0;
-            double product = 1;
-            int count = 0;
+        long sum = 0;
+        foreach (int x in arr) sum += x;
+        Console.WriteLine($"Сумма: {sum}");
 
-            foreach(int num in numbers)
-            {
-                sum += num;
-                product *= num;
-                if (num % 2 == 0)
-                {
-                    count++;
-                }
-            }
-            
-            double average = (double)sum / numbers.Length;
+        double product = 1;
+        foreach (int x in arr) product *= x;
+        Console.WriteLine($"Произведение: {product:E2}");
 
-            int greaterCount = 0;
-            foreach(int num in numbers)
-            {
-                if (num > average)
-                {
-                    greaterCount++;
-                }
-            }
+        int evenCount = 0;
+        foreach (int x in arr) if (x % 2 == 0) evenCount++;
+        Console.WriteLine($"Чётных чисел: {evenCount}");
 
-            Console.WriteLine($"Сумма {sum}");
-            Console.WriteLine($"Произведение {product:E2}");
-            Console.WriteLine($"Четных чисел {count}");
-            Console.WriteLine($"Больше среднего ({Math.Round(average, 1)}): {greaterCount}");
-
-        }
+        double avg = (double)sum / arr.Length;
+        int aboveAvg = 0;
+        foreach (int x in arr) if (x > avg) aboveAvg++;
+        Console.WriteLine($"Больше среднего ({avg:F1}): {aboveAvg}");
     }
-
 }
